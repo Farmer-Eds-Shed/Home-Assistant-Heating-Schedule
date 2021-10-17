@@ -27,7 +27,7 @@
  */
 
 #define MY_DEBUG
-#define MY_RADIO_NRF24
+#define MY_RADIO_RF24
 
 
 //Enable Signing <Make Sure you Change Password>
