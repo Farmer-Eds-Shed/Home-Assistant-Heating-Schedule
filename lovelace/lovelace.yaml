@@ -1,0 +1,831 @@
+title: Home
+views:
+  - icon: mdi:radiator
+    path: default_view
+    title: Central Heating
+    visible:
+      - user: 4eb30717c06b496ca62accd38d0b8032
+      - user: c41ac99379904d29b7627eef93599690
+    badges:
+      - entity: sensor.outside_temperature
+        name: Outside °C
+      - entity: sensor.time
+    cards:
+      - type: thermostat
+        entity: climate.ha_thermo
+        name: Downstairs (Master)
+      - type: thermostat
+        entity: climate.ha_upstairs
+        name: Upstairs (Master)
+      - type: thermostat
+        entity: climate.sitting_room_thermostat
+        name: Sitting Room (Slave)
+      - cards:
+          - entity: sensor.oil_level_2
+            max: 100
+            min: 0
+            type: gauge
+          - entities:
+              - entity: switch.boiler
+                icon: mdi:fire
+                name: Boiler
+              - entity: climate.ha_thermo
+                icon: mdi:home-thermometer-outline
+                name: Downstairs
+              - entity: climate.ha_upstairs
+                icon: mdi:home-thermometer-outline
+                name: Upstairs
+              - entity: climate.sitting_room_thermostat
+                icon: mdi:home-thermometer-outline
+                name: Sitting Room
+            show_name: true
+            show_state: true
+            type: glance
+        type: vertical-stack
+      - type: entities
+        entities:
+          - entity: sensor.temperature_sensor_20_0
+            name: Kitchen
+          - entity: sensor.temperature_sensor_21_0
+            name: Sitting Room
+          - entity: climate.upstairs
+          - entity: climate.downstairs
+        title: Zone Temperatures
+        footer:
+          type: buttons
+          entities: []
+      - entities:
+          - entity: sensor.current_temp
+            name: Hall
+          - entity: sensor.upstairs_temp
+            name: Upstairs
+          - entity: sensor.temperature_sensor_20_0
+            name: Kitchen
+          - entity: sensor.temperature_sensor_21_0
+            name: Sitting Room
+        hours_to_show: 24
+        refresh_interval: 0
+        title: Zone Temperature
+        type: history-graph
+  - icon: mdi:water-pump
+    title: Hot Water
+    badges:
+      - entity: sensor.time
+    cards:
+      - cards:
+          - entities:
+              - entity: input_boolean.switch_immersion_timer
+                name: Boost HW Immersion
+              - entity: input_boolean.switch_hw_timer
+                name: Boost HW Boiler
+              - entity: input_number.immersion_timer
+                name: Boost Minutes
+              - entity: automation.immersion_on_time
+                icon: mdi:robot-industrial
+                name: HW Immersion Auto On
+              - entity: automation.hw_boiler_timer
+                icon: mdi:robot-industrial
+                name: HW Boiler Auto On
+              - entity: input_datetime.immersion_auto_on
+                icon: mdi:clock-outline
+                name: Auto On time
+              - entity: input_number.immersion_temp
+                icon: mdi:thermometer
+                name: Auto On °C
+            show_header_toggle: false
+            type: entities
+          - entity: sensor.temperature_sensor_32_0
+            max: 100
+            min: 0
+            name: HW @ Taps
+            severity:
+              green: 40
+              red: 50
+              yellow: 45
+            type: gauge
+          - entity: sensor.temperature_sensor_31_0
+            max: 100
+            min: 0
+            name: HW @ Boiler
+            severity:
+              green: 35
+              red: 55
+              yellow: 45
+            theme: default
+            type: gauge
+          - entities:
+              - entity: switch.immersion_heater
+                icon: mdi:hot-tub
+                name: Immersion
+              - entity: switch.boiler
+                name: Boiler
+                icon: mdi:fire
+              - entity: climate.hw_zone_thermostat
+                icon: mdi:water-pump
+                name: HW Zone
+              - entity: sensor.temperature_sensor_30_0
+                icon: mdi:weather-sunny
+                name: HW @ Solar
+            type: glance
+        type: vertical-stack
+      - entities:
+          - entity: sensor.temperature_sensor_30_0
+            name: Solar Temperature
+          - entity: sensor.temperature_sensor_31_0
+            name: Boiler Temperature
+          - entity: sensor.temperature_sensor_32_0
+            name: Taps Temperature
+        hours_to_show: 24
+        refresh_interval: 0
+        title: Hot Water
+        type: history-graph
+      - entities:
+          - entity: sensor.temperature_sensor_30_0
+            name: Solar
+        hours_to_show: 168
+        refresh_interval: 0
+        title: Solar HW Last 7 Days
+        type: history-graph
+  - icon: mdi:ceiling-light
+    path: lights
+    title: Lights
+    visible:
+      - user: 4eb30717c06b496ca62accd38d0b8032
+      - user: c41ac99379904d29b7627eef93599690
+    badges:
+      - entity: sensor.time
+    cards:
+      - cards:
+          - entity: switch.hall_lights
+            icon: mdi:ceiling-light
+            name: Hall Lights
+            type: custom:button-card
+            state:
+              - value: unavailable
+                styles:
+                  card:
+                    - filter: opacity(40%)
+                  icon:
+                    - filter: invert(70%)
+                  name:
+                    - filter: invert(70%)
+                  state:
+                    - filter: invert(70%)
+          - entity: switch.front_lights
+            icon: mdi:outdoor-lamp
+            name: Front Outside Lights
+            type: custom:button-card
+            state:
+              - value: unavailable
+                styles:
+                  card:
+                    - filter: opacity(40%)
+                  icon:
+                    - filter: invert(70%)
+                  name:
+                    - filter: invert(70%)
+                  state:
+                    - filter: invert(70%)
+        type: horizontal-stack
+      - entity: switch.outsidebackdoor
+        icon: mdi:outdoor-lamp
+        name: Back Outside Lights
+        type: custom:button-card
+        state:
+          - value: unavailable
+            styles:
+              card:
+                - filter: opacity(40%)
+              icon:
+                - filter: invert(70%)
+              name:
+                - filter: invert(70%)
+              state:
+                - filter: invert(70%)
+  - icon: mdi:cctv
+    path: cctv
+    title: CCTV
+    visible:
+      - user: 4eb30717c06b496ca62accd38d0b8032
+      - user: c41ac99379904d29b7627eef93599690
+    badges:
+      - entity: sensor.time
+    cards:
+      - aspect_ratio: 0%
+        camera_image: camera.front_gate
+        camera_view: live
+        entities:
+          - entity: switch.front_lights
+        image: https://demo.home-assistant.io/stub_config/kitchen.png
+        tap_action:
+          action: more-info
+        title: Front Gate
+        type: picture-glance
+      - aspect_ratio: 0%
+        camera_image: camera.front_door
+        camera_view: live
+        entities:
+          - entity: switch.front_lights
+        image: https://demo.home-assistant.io/stub_config/kitchen.png
+        title: Front Door
+        type: picture-glance
+      - entities:
+          - entity: binary_sensor.embedded_net_dvr_motion_3
+            name: Front Gate
+          - entity: binary_sensor.embedded_net_dvr_motion_1
+            name: Front Door
+        hours_to_show: 24
+        refresh_interval: 0
+        title: Motion Detection
+        type: history-graph
+  - icon: mdi:clock
+    path: ''
+    title: schedule
+    visible:
+      - user: 4eb30717c06b496ca62accd38d0b8032
+      - user: c41ac99379904d29b7627eef93599690
+    badges:
+      - entity: sensor.time
+      - entity: sensor.outside_temperature
+    cards:
+      - title: Heating Schedule
+        cards:
+          - entities:
+              - entity: input_boolean.heating_master
+                name: Heating Schedule
+              - entity: input_number.t0_temp
+                name: Night / Away °C
+            show_header_toggle: false
+            type: entities
+            footer:
+              type: graph
+              entity: sensor.hvac_temperature_knob
+              hours_to_show: 24
+          - entities:
+              - entity: switch.boiler
+                icon: mdi:fire
+                name: Boiler
+              - entity: sensor.current_temp
+                icon: mdi:home-thermometer-outline
+                name: Downstairs
+              - entity: sensor.upstairs_temp
+                icon: mdi:home-thermometer-outline
+                name: Upstairs
+              - entity: sensor.temperature_sensor_21_0
+                icon: mdi:home-thermometer-outline
+                name: Sitting Room
+            show_name: true
+            show_state: true
+            type: glance
+        type: vertical-stack
+      - cards:
+          - cards:
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_sunday_p1
+                icon: mdi:calendar-today
+                name: Sun
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_monday_p1
+                icon: mdi:calendar-today
+                name: Mon
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_tuesday_p1
+                icon: mdi:calendar-today
+                name: Tues
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_wednesday_p1
+                icon: mdi:calendar-today
+                name: Wed
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_thursday_p1
+                icon: mdi:calendar-today
+                name: Thur
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_friday_p1
+                icon: mdi:calendar-today
+                name: Fri
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_saturday_p1
+                icon: mdi:calendar-today
+                name: Sat
+                type: custom:button-card
+            type: horizontal-stack
+          - entities:
+              - entity: input_datetime.p1_on
+                icon: mdi:clock-start
+                name: Begin
+              - entity: input_number.t1_temp
+                name: Hall (Master) Temperature °C
+              - entity: input_number.t1_upstairs
+                name: Upstairs Temperature °C
+              - entity: input_number.t1_sitting_room
+                name: Front Room Temperature °C
+              - entity: input_datetime.p2_on
+                name: End
+            show_header_toggle: false
+            type: entities
+        title: Heating Schedule 1
+        type: vertical-stack
+      - cards:
+          - cards:
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_sunday_p2
+                icon: mdi:calendar-today
+                name: Sun
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_monday_p2
+                icon: mdi:calendar-today
+                name: Mon
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_tuesday_p2
+                icon: mdi:calendar-today
+                name: Tues
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_wednesday_p2
+                icon: mdi:calendar-today
+                name: Wed
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_thursday_p2
+                icon: mdi:calendar-today
+                name: Thurs
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_friday_p2
+                icon: mdi:calendar-today
+                name: Fri
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_saturday_p2
+                icon: mdi:calendar-today
+                name: Sat
+                type: custom:button-card
+            type: horizontal-stack
+          - entities:
+              - entity: input_datetime.p2_on
+                icon: mdi:clock-start
+                name: Begin
+              - entity: input_number.t2_temp
+                name: Hall (Master) Temperature °C
+              - entity: input_number.t2_upstairs
+                name: Upstairs Temperature °C
+              - entity: input_number.t2_sitting_room
+                name: Front Room Temperature °C
+              - entity: input_datetime.p3_on
+                name: End
+            show_header_toggle: false
+            type: entities
+        title: Heating Schedule 2
+        type: vertical-stack
+      - cards:
+          - cards:
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_sunday_p3
+                icon: mdi:calendar-today
+                name: Sun
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_monday_p3
+                icon: mdi:calendar-today
+                name: Mon
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_tuesday_p3
+                icon: mdi:calendar-today
+                name: Tues
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_wednesday_p3
+                icon: mdi:calendar-today
+                name: Wed
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_thursday_p3
+                icon: mdi:calendar-today
+                name: ThurS
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_friday_p3
+                icon: mdi:calendar-today
+                name: Fri
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_saturday_p3
+                icon: mdi:calendar-today
+                name: Sat
+                type: custom:button-card
+            type: horizontal-stack
+          - entities:
+              - entity: input_datetime.p3_on
+                icon: mdi:clock-start
+                name: Begin
+              - entity: input_number.t3_temp
+                name: Hall (Master) Temperature °C
+              - entity: input_number.t3_upstairs
+                name: Upstairs Temperature °C
+              - entity: input_number.t3_sitting_room
+                name: Front Room Temperature °C
+              - entity: input_datetime.p4_on
+                name: End
+            show_header_toggle: false
+            type: entities
+        title: Heating Schedule 3
+        type: vertical-stack
+      - cards:
+          - cards:
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_sunday_p4
+                icon: mdi:calendar-today
+                name: Sun
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_monday_p4
+                icon: mdi:calendar-today
+                name: Mon
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_tuesday_p4
+                icon: mdi:calendar-today
+                name: Tues
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_wednesday_p4
+                icon: mdi:calendar-today
+                name: Wed
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_thursday_p4
+                icon: mdi:calendar-today
+                name: Thurs
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_friday_p4
+                icon: mdi:calendar-today
+                name: Fri
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_saturday_p4
+                icon: mdi:calendar-today
+                name: Sat
+                type: custom:button-card
+            type: horizontal-stack
+          - entities:
+              - entity: input_datetime.p4_on
+                icon: mdi:clock-start
+                name: Begin
+              - entity: input_number.t4_temp
+                name: Hall (Master) Temperature °C
+              - entity: input_number.t4_upstairs
+                name: Upstairs Temperature °C
+              - entity: input_number.t4_sitting_room
+                name: Front Room Temperature °C
+              - entity: input_datetime.p5_on
+                name: End
+            show_header_toggle: false
+            type: entities
+        title: Heating Schedule 4
+        type: vertical-stack
+      - cards:
+          - cards:
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_sunday_p5
+                icon: mdi:calendar-today
+                name: Sun
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_monday_p5
+                icon: mdi:calendar-today
+                name: Mon
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_tuesday_p5
+                icon: mdi:calendar-today
+                name: Tues
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_wednesday_p5
+                icon: mdi:calendar-today
+                name: Wed
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_thursday_p5
+                icon: mdi:calendar-today
+                name: Thurs
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_friday_p5
+                icon: mdi:calendar-today
+                name: Fri
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_saturday_p5
+                icon: mdi:calendar-today
+                name: Sat
+                type: custom:button-card
+            type: horizontal-stack
+          - entities:
+              - entity: input_datetime.p5_on
+                icon: mdi:clock-start
+                name: Begin
+              - entity: input_number.t5_temp
+                name: Hall (Master) Temperature °C
+              - entity: input_number.t5_upstairs
+                name: Upstairs Temperature °C
+              - entity: input_number.t5_sitting_room
+                name: Sitting Room Temperature °C
+              - entity: input_datetime.p6_on
+                name: End
+            show_header_toggle: false
+            type: entities
+        title: Heating Schedule 5
+        type: vertical-stack
+      - cards:
+          - cards:
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_sunday_p6
+                icon: mdi:calendar-today
+                name: Sunday
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_monday_p6
+                icon: mdi:calendar-today
+                name: Mon
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_tuesday_p6
+                icon: mdi:calendar-today
+                name: Tues
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_wednesday_p6
+                icon: mdi:calendar-today
+                name: Wed
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_thursday_p6
+                icon: mdi:calendar-today
+                name: Thurs
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_friday_p6
+                icon: mdi:calendar-today
+                name: Fri
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_saturday_p6
+                icon: mdi:calendar-today
+                name: Sat
+                type: custom:button-card
+            type: horizontal-stack
+          - entities:
+              - entity: input_datetime.p6_on
+                icon: mdi:clock-start
+                name: Begin
+              - entity: input_number.t6_temp
+                name: Hall (Master) Temperature °C
+              - entity: input_number.t6_upstairs
+                name: Upstairs Temperature °C
+              - entity: input_number.t6_sitting_room
+                name: Sitting Room Temperature °C
+              - entity: input_datetime.p7_on
+                name: End
+            show_header_toggle: false
+            type: entities
+        title: Heating Schedule 6
+        type: vertical-stack
+      - cards:
+          - cards:
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_sunday_p7
+                icon: mdi:calendar-today
+                name: Sun
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_monday_p7
+                icon: mdi:calendar-today
+                name: Mon
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_tuesday_p7
+                icon: mdi:calendar-today
+                name: Tues
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_wednesday_p7
+                icon: mdi:calendar-today
+                name: Wed
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_thursday_p7
+                icon: mdi:calendar-today
+                name: Thurs
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_friday_p7
+                icon: mdi:calendar-today
+                name: Fri
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_saturday_p7
+                icon: mdi:calendar-today
+                name: Sat
+                type: custom:button-card
+            type: horizontal-stack
+          - entities:
+              - entity: input_datetime.p7_on
+                icon: mdi:clock-start
+                name: Begin
+              - entity: input_number.t7_temp
+                name: Hall (Master) Temperature °C
+              - entity: input_number.t7_upstairs
+                name: Upstairs Temperature °C
+              - entity: input_number.t7_sitting_room
+                name: Front Room Temperature °C
+              - entity: input_datetime.p8_on
+                name: End
+            show_header_toggle: false
+            type: entities
+        title: Heating Schedule 7
+        type: vertical-stack
+      - cards:
+          - cards:
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_sunday_p8
+                icon: mdi:calendar-today
+                name: Sun
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_monday_p8
+                icon: mdi:calendar-today
+                name: Mon
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_tuesday_p8
+                icon: mdi:calendar-today
+                name: Tues
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_wednesday_p8
+                icon: mdi:calendar-today
+                name: Wed
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_thursday_p8
+                icon: mdi:calendar-today
+                name: Thurs
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_friday_p8
+                icon: mdi:calendar-today
+                name: Fri
+                type: custom:button-card
+              - color: rgb(66, 134, 244)
+                color_type: card
+                entity: input_boolean.switch_saturday_p8
+                icon: mdi:calendar-today
+                name: Sat
+                type: custom:button-card
+            type: horizontal-stack
+          - entities:
+              - entity: input_datetime.p8_on
+                icon: mdi:clock-start
+                name: Begin
+              - entity: input_number.t8_temp
+                name: Hall (Master) Temperature °C
+              - entity: input_number.t8_upstairs
+                name: Upstairs Temperature °C
+              - entity: input_number.t8_sitting_room
+                name: Front Room Temperature °C
+            show_header_toggle: false
+            type: entities
+        title: Heating Schedule 8
+        type: vertical-stack
+  - title: Graphs
+    path: graphs
+    icon: mdi:chart-areaspline
+    badges: []
+    cards:
+      - entities:
+          - entity: sensor.temperature_sensor_30_0
+            name: Solar Temperature
+          - entity: sensor.temperature_sensor_31_0
+            name: Boiler Temperature
+          - entity: sensor.temperature_sensor_32_0
+            name: Taps Temperature
+          - entity: switch.immersion
+          - entity: switch.hw_zone_valve
+        hours_to_show: 24
+        refresh_interval: 0
+        title: Hot Water
+        type: history-graph
+      - entities:
+          - entity: switch.boiler
+          - entity: sensor.current_temp
+            name: Downstairs
+          - entity: sensor.upstairs_temp
+            name: Upstairs
+        hours_to_show: 24
+        refresh_interval: 0
+        title: Zone Temperature
+        type: history-graph
+      - entities:
+          - entity: sensor.temperature_sensor_20_0
+            name: Kitchen
+          - entity: sensor.temperature_sensor_21_0
+            name: Sitting Room
+          - entity: group.sitting_room
+        hours_to_show: 24
+        refresh_interval: 0
+        title: Room Temperatures
+        type: history-graph
+      - entities:
+          - entity: sensor.outside_temperature
+        hours_to_show: 24
+        refresh_interval: 0
+        title: Outside Temperature
+        type: history-graph
+      - entities:
+          - entity: sensor.temperature_sensor_30_0
+            name: Solar
+        hours_to_show: 168
+        refresh_interval: 0
+        title: Solar HW Last 7 Days
+        type: history-graph
+      - type: statistics-graph
+        entities:
+          - sensor.temperature_sensor_30_0
+        chart_type: line
+        stat_types:
+          - max
+        title: Solar Temp Month
+        days_to_show: 30
+      - type: history-graph
+        entities:
+          - entity: sensor.oil_level_2
+        hours_to_show: 730
+        refresh_interval: 0
+        title: Oil Level Month
