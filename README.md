@@ -13,7 +13,7 @@ Other Dependencies:
 [Custom Cards](https://github.com/custom-cards/button-card)
 
 Hardware: <br />
-Saswell Thermosats (Tuya), to control heating zone valves and main physical interface for heating system.<br />
+Saswell T19XWHB-7-DF-APP(TY) thermostats (Tuya), to control heating zone valves and main physical interface for heating system.<br />
 Tuya Switches to control Boiler and radiator TRV's.<br />
 Shelly 1 smart switch to control Immersion Heater via 32A relay.<br />
 MySensors ESP32 Gateway.<br />
