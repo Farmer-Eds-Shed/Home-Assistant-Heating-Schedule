@@ -1,0 +1,6 @@
+
+Sitting Room:
+  name: sitting_room
+  entities:
+    - switch.front_room_rad1
+    - switch.front_room_rad2

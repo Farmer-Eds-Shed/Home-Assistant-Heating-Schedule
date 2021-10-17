@@ -1,0 +1,16 @@
+climate.bf0dca95cb90411960fl8n:
+  max_temp: 24
+  min_temp: 5
+climate.upstairs:
+  hvac_modes:
+  - heat
+climate.ha_thermo:
+  hvac_modes:
+  - heat
+climate.ha_upstairs:
+  hvac_modes:
+  - heat
+sensor.temperature_sensor_32_0:
+  device_class: temperature
+sensor.distance_sensor_42_1_2:
+  unit_of_measurement: cm
