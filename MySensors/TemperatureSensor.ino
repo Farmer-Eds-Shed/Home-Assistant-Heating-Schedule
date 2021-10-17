@@ -30,6 +30,7 @@
 
 // Enable and select radio type attached
 #define MY_RADIO_RF24
+#define MY_NODE_ID 31
 
 
 #include <MySensors.h>  
