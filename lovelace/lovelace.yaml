@@ -3,9 +3,6 @@ views:
   - icon: mdi:radiator
     path: default_view
     title: Central Heating
-    visible:
-      - user: 4eb30717c06b496ca62accd38d0b8032
-      - user: c41ac99379904d29b7627eef93599690
     badges:
       - entity: sensor.outside_temperature
         name: Outside °C
@@ -146,104 +143,9 @@ views:
         refresh_interval: 0
         title: Solar HW Last 7 Days
         type: history-graph
-  - icon: mdi:ceiling-light
-    path: lights
-    title: Lights
-    visible:
-      - user: 4eb30717c06b496ca62accd38d0b8032
-      - user: c41ac99379904d29b7627eef93599690
-    badges:
-      - entity: sensor.time
-    cards:
-      - cards:
-          - entity: switch.hall_lights
-            icon: mdi:ceiling-light
-            name: Hall Lights
-            type: custom:button-card
-            state:
-              - value: unavailable
-                styles:
-                  card:
-                    - filter: opacity(40%)
-                  icon:
-                    - filter: invert(70%)
-                  name:
-                    - filter: invert(70%)
-                  state:
-                    - filter: invert(70%)
-          - entity: switch.front_lights
-            icon: mdi:outdoor-lamp
-            name: Front Outside Lights
-            type: custom:button-card
-            state:
-              - value: unavailable
-                styles:
-                  card:
-                    - filter: opacity(40%)
-                  icon:
-                    - filter: invert(70%)
-                  name:
-                    - filter: invert(70%)
-                  state:
-                    - filter: invert(70%)
-        type: horizontal-stack
-      - entity: switch.outsidebackdoor
-        icon: mdi:outdoor-lamp
-        name: Back Outside Lights
-        type: custom:button-card
-        state:
-          - value: unavailable
-            styles:
-              card:
-                - filter: opacity(40%)
-              icon:
-                - filter: invert(70%)
-              name:
-                - filter: invert(70%)
-              state:
-                - filter: invert(70%)
-  - icon: mdi:cctv
-    path: cctv
-    title: CCTV
-    visible:
-      - user: 4eb30717c06b496ca62accd38d0b8032
-      - user: c41ac99379904d29b7627eef93599690
-    badges:
-      - entity: sensor.time
-    cards:
-      - aspect_ratio: 0%
-        camera_image: camera.front_gate
-        camera_view: live
-        entities:
-          - entity: switch.front_lights
-        image: https://demo.home-assistant.io/stub_config/kitchen.png
-        tap_action:
-          action: more-info
-        title: Front Gate
-        type: picture-glance
-      - aspect_ratio: 0%
-        camera_image: camera.front_door
-        camera_view: live
-        entities:
-          - entity: switch.front_lights
-        image: https://demo.home-assistant.io/stub_config/kitchen.png
-        title: Front Door
-        type: picture-glance
-      - entities:
-          - entity: binary_sensor.embedded_net_dvr_motion_3
-            name: Front Gate
-          - entity: binary_sensor.embedded_net_dvr_motion_1
-            name: Front Door
-        hours_to_show: 24
-        refresh_interval: 0
-        title: Motion Detection
-        type: history-graph
   - icon: mdi:clock
     path: ''
     title: schedule
-    visible:
-      - user: 4eb30717c06b496ca62accd38d0b8032
-      - user: c41ac99379904d29b7627eef93599690
     badges:
       - entity: sensor.time
       - entity: sensor.outside_temperature
