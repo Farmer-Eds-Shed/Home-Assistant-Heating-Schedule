@@ -16,7 +16,7 @@ Hardware: <br />
 Saswell T19XWHB-7-DF-APP(TY) thermostats (Tuya), to control heating zone valves and main physical interface for heating system.<br />
 Tuya Switches to control Boiler and radiator TRV's.<br />
 Shelly 1 smart switch to control Immersion Heater via 32A relay.<br />
-MySensors ESP32 Gateway.<br />
+MySensors ESP8266 Gateway.<br />
 MySensors Arduino based temperature sensors.<br />
 MySensors Arduino based oil level sensor.
 
