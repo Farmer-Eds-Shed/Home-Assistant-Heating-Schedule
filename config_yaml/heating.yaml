@@ -1,0 +1,772 @@
+#-------------------------Heating Schedule version 3.0-----------------------------------------    
+
+
+#--------------Create Boiler thermostat-------------------------------
+#virtual thermostat using sensor value from downstairs thermostat and boiler switch.
+climate:
+- platform: generic_thermostat
+  name: HA thermo
+  heater: input_boolean.switch_downstairs #Boiler Switch
+  target_sensor: sensor.current_temp #Boiler room sensor currently reading downstairs zone thermostat
+  min_temp: 10
+  max_temp: 24
+  ac_mode: false
+  cold_tolerance: 0.8
+  hot_tolerance: 0.5
+  min_cycle_duration:
+    seconds: 5
+  keep_alive:
+    minutes: 1
+  precision: 0.5
+  
+#upstairs virtual stat
+- platform: generic_thermostat
+  name: HA upstairs
+  heater: input_boolean.switch_upstairs #Boiler Switch
+  target_sensor: sensor.upstairs_temp #Boiler room sensor currently reading downstairs zone thermostat
+  min_temp: 10
+  max_temp: 24
+  ac_mode: false
+  cold_tolerance: 0.8
+  hot_tolerance: 0.5
+  min_cycle_duration:
+    seconds: 5
+  keep_alive:
+    minutes: 1
+  precision: 0.5
+  
+#Immersion Thermostat
+- platform: generic_thermostat
+  name: HW thermostat
+  heater: switch.immersion #Immersion Switch
+  target_sensor: sensor.temperature_sensor_31_0 #HW Boiler sensor
+  min_temp: 0
+  max_temp: 65
+  ac_mode: false
+  cold_tolerance: 1
+  hot_tolerance: 0
+  min_cycle_duration:
+    seconds: 5
+  keep_alive:
+    minutes: 1
+  initial_hvac_mode: "off"
+  precision: 0.1
+  
+  #HW Zone Thermostat
+- platform: generic_thermostat
+  name: HW zone thermostat
+  heater: switch.hw_zone_valve
+  target_sensor: sensor.temperature_sensor_31_0 #HW Boiler sensor
+  min_temp: 0
+  max_temp: 65
+  ac_mode: false
+  cold_tolerance: 1
+  hot_tolerance: 0
+  min_cycle_duration:
+    seconds: 5
+  keep_alive:
+    minutes: 1
+  initial_hvac_mode: "off"
+  precision: 0.1
+  
+    #Sitting Room Thermostat
+- platform: generic_thermostat
+  name: Sitting Room thermostat
+  heater: group.sitting_room
+  target_sensor: sensor.temperature_sensor_21_0 #Sitting Room temp Sensor
+  min_temp: 0
+  max_temp: 24
+  ac_mode: false
+  cold_tolerance: 0.3
+  hot_tolerance: 0.3
+  min_cycle_duration:
+    seconds: 5
+  keep_alive:
+    minutes: 1
+  precision: 0.1
+  
+binary_sensor:  
+  - platform: workday
+    country: 'IE'
+    name: 'workday_today'
+    workdays: [mon, tue, wed, thu, fri, sat]
+    excludes: [sun, holiday]
+
+#---------------------------input temperatures--------------------------
+input_number:  # input number 
+
+#-------------------------Zone Temperatures---------------------------------
+  t1_upstairs:
+    name: T1 Upstairs
+    min: 10
+    max: 24
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline  
+    
+  t1_sitting_room:
+    name: T1 Sitting Room
+    min: 10
+    max: 24
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline 
+    
+  t2_upstairs:
+    name: T2 Upstairs
+    min: 10
+    max: 24
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline  
+    
+  t2_sitting_room:
+    name: T2 Sitting Room
+    min: 10
+    max: 24
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline  
+    
+  t3_upstairs:
+    name: T3 Upstairs
+    min: 10
+    max: 24
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline  
+    
+  t3_sitting_room:
+    name: T3 Sitting Room
+    min: 10
+    max: 24
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline  
+    
+  t4_upstairs:
+    name: T4 Upstairs
+    min: 10
+    max: 24
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline  
+    
+  t4_sitting_room:
+    name: T4 Sitting Room
+    min: 10
+    max: 24
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline  
+    
+  t5_upstairs:
+    name: T5 Upstairs
+    min: 10
+    max: 24
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline  
+    
+  t5_sitting_room:
+    name: T5 Sitting Room
+    min: 10
+    max: 24
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline  
+    
+  t6_upstairs:
+    name: T6 Upstairs
+    min: 10
+    max: 24
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline  
+    
+  t6_sitting_room:
+    name: T6 Sitting Room
+    min: 10
+    max: 24
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline  
+    
+  t7_upstairs:
+    name: T7 Upstairs
+    min: 10
+    max: 24
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline  
+
+  t7_sitting_room:
+    name: T7 Sitting Room
+    min: 10
+    max: 24
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline  
+    
+  t8_upstairs:
+    name: T8 Upstairs
+    min: 10
+    max: 24
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline  
+    
+  t8_sitting_room:
+    name: T8 Sitting Room
+    min: 10
+    max: 24
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline  
+    
+
+#----------------night temp/ min temp----------------------------------------
+  t0_temp:  
+    name: T night
+    min: 10
+    max: 24
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer     
+    
+#-----------------Boiler Program Temperatures---------------------------------
+  t1_temp:  # temperature preset T1
+    name: °C
+    min: 10
+    max: 25
+    step: 0.5 
+    mode: box
+    icon: mdi:home-thermometer-outline
+    
+  t2_temp:  # temperature preset T2
+    name: °C
+    min: 10
+    max: 25
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline
+
+  t3_temp:  # temperature preset T3
+    name: °C
+    min: 10
+    max: 25
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline
+
+  t4_temp:  # temperature preset T4
+    name: °C
+    min: 10
+    max: 25
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline
+    
+  t5_temp:  # temperature preset T5
+    name: °C
+    min: 10
+    max: 25
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline
+    
+  t6_temp:  # temperature preset T6
+    name: °C
+    min: 10
+    max: 25
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline
+    
+  t7_temp:  # temperature preset T7
+    name: °C
+    min: 10
+    max: 25
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline
+    
+  t8_temp:  # temperature preset T8
+    name: °C
+    min: 10
+    max: 25
+    step: 0.5
+    mode: box
+    icon: mdi:home-thermometer-outline    
+    
+    
+#---------------------immersion heater--------------------------------
+  immersion_temp:
+    name: Immersion °C
+    min: 30
+    max: 65
+    step: 0.5
+    mode: box
+    icon: mdi:hot-tub
+    
+  immersion_timer:  # set time for immersion heater
+    name: Minutes
+    min: 10
+    max: 120
+    step: 1 
+    mode: box
+    icon: mdi:timer-sand
+    
+  hw_timer:  # set time for immersion heater
+    name: Minutes
+    min: 10
+    max: 120
+    step: 1 
+    mode: box
+    icon: mdi:timer-sand
+    
+  cloud_forecast:  # set time for immersion heater
+    name: Max Cloud Cover %
+    min: 1
+    max: 100
+    step: 1 
+    mode: box
+    icon: mdi:cloud-outline
+
+
+#-----------------boolean switches-------------    
+input_boolean:
+  heating_master: # if ON enable heating week timer
+    name: Heating Auto timer
+    icon: mdi:av-timer
+    
+    
+  switch_immersion_timer:
+    name: Immersion timer
+    initial: off
+    icon: mdi:hot-tub
+    
+  switch_hw_timer:
+    name: HW timer
+    initial: off
+    icon: mdi:hot-tub
+    
+  switch_upstairs:
+    name: upstairs boolean
+  
+  switch_downstairs:
+    name: downstairs boolean  
+    
+#-----------------boolean weekday/weekend switches-------------    
+
+  switch_monday_p1:
+    name: Monday
+    icon: mdi:calendar-today
+
+  switch_tuesday_p1:
+    name: Tuesday
+    icon: mdi:calendar-today
+
+  switch_wednesday_p1:
+    name: Wednesday
+    icon: mdi:calendar-today
+
+  switch_thursday_p1:
+    name: Thursday
+    icon: mdi:calendar-today
+
+  switch_friday_p1:
+    name: Friday
+    icon: mdi:calendar-today
+    
+  switch_saturday_p1:
+    name: Saturday
+    icon: mdi:calendar-today
+    
+  switch_sunday_p1:
+    name: Sunday
+    icon: mdi:calendar-today
+    
+  switch_monday_p2:
+    name: Monday
+    icon: mdi:calendar-today
+
+  switch_tuesday_p2:
+    name: Tuesday
+    icon: mdi:calendar-today
+
+  switch_wednesday_p2:
+    name: Wednesday
+    icon: mdi:calendar-today
+
+  switch_thursday_p2:
+    name: Thursday
+    icon: mdi:calendar-today
+
+  switch_friday_p2:
+    name: Friday
+    icon: mdi:calendar-today
+    
+  switch_saturday_p2:
+    name: Saturday
+    icon: mdi:calendar-today
+    
+  switch_sunday_p2:
+    name: Sunday
+    icon: mdi:calendar-today
+    
+  switch_monday_p3:
+    name: Monday
+    icon: mdi:calendar-today
+
+  switch_tuesday_p3:
+    name: Tuesday
+    icon: mdi:calendar-today
+
+  switch_wednesday_p3:
+    name: Wednesday
+    icon: mdi:calendar-today
+
+  switch_thursday_p3:
+    name: Thursday
+    icon: mdi:calendar-today
+
+  switch_friday_p3:
+    name: Friday
+    icon: mdi:calendar-today
+    
+  switch_saturday_p3:
+    name: Saturday
+    icon: mdi:calendar-today
+    
+  switch_sunday_p3:
+    name: Sunday
+    icon: mdi:calendar-today
+    
+  switch_monday_p4:
+    name: Monday
+    icon: mdi:calendar-today
+
+  switch_tuesday_p4:
+    name: Tuesday
+    icon: mdi:calendar-today
+
+  switch_wednesday_p4:
+    name: Wednesday
+    icon: mdi:calendar-today
+
+  switch_thursday_p4:
+    name: Thursday
+    icon: mdi:calendar-today
+
+  switch_friday_p4:
+    name: Friday
+    icon: mdi:calendar-today
+
+  switch_saturday_p4:
+    name: Saturday
+    icon: mdi:calendar-today
+    
+  switch_sunday_p4:
+    name: Sunday
+    icon: mdi:calendar-today
+    
+  switch_monday_p5:
+    name: Monday
+    icon: mdi:calendar-today
+
+  switch_tuesday_p5:
+    name: Tuesday
+    icon: mdi:calendar-today
+
+  switch_wednesday_p5:
+    name: Wednesday
+    icon: mdi:calendar-today
+
+  switch_thursday_p5:
+    name: Thursday
+    icon: mdi:calendar-today
+
+  switch_friday_p5:
+    name: Friday
+    icon: mdi:calendar-today
+    
+  switch_saturday_p5:
+    name: Saturday
+    icon: mdi:calendar-today
+    
+  switch_sunday_p5:
+    name: Sunday
+    icon: mdi:calendar-today
+    
+  switch_monday_p6:
+    name: Monday
+    icon: mdi:calendar-today
+
+  switch_tuesday_p6:
+    name: Tuesday
+    icon: mdi:calendar-today
+
+  switch_wednesday_p6:
+    name: Wednesday
+    icon: mdi:calendar-today
+
+  switch_thursday_p6:
+    name: Thursday
+    icon: mdi:calendar-today
+
+  switch_friday_p6:
+    name: Friday
+    icon: mdi:calendar-today
+    
+  switch_saturday_p6:
+    name: Saturday
+    icon: mdi:calendar-today
+    
+  switch_sunday_p6:
+    name: Sunday
+    icon: mdi:calendar-today
+ 
+  switch_monday_p7:
+    name: Monday
+    icon: mdi:calendar-today
+
+  switch_tuesday_p7:
+    name: Tuesday
+    icon: mdi:calendar-today
+
+  switch_wednesday_p7:
+    name: Wednesday
+    icon: mdi:calendar-today
+
+  switch_thursday_p7:
+    name: Thursday
+    icon: mdi:calendar-today
+
+  switch_friday_p7:
+    name: Friday
+    icon: mdi:calendar-today
+    
+  switch_saturday_p7:
+    name: Saturday
+    icon: mdi:calendar-today
+    
+  switch_sunday_p7:
+    name: Sunday
+    icon: mdi:calendar-today
+    
+  switch_monday_p8:
+    name: Monday
+    icon: mdi:calendar-today
+
+  switch_tuesday_p8:
+    name: Tuesday
+    icon: mdi:calendar-today
+
+  switch_wednesday_p8:
+    name: Wednesday
+    icon: mdi:calendar-today
+
+  switch_thursday_p8:
+    name: Thursday
+    icon: mdi:calendar-today
+
+  switch_friday_p8:
+    name: Friday
+    icon: mdi:calendar-today
+    
+  switch_saturday_p8:
+    name: Saturday
+    icon: mdi:calendar-today
+    
+  switch_sunday_p8:
+    name: Sunday
+    icon: mdi:calendar-today
+    
+#-----------------------------sensors----------------------------------------------------------------
+#weather sensor    
+sensor:
+#time sensor
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+      - 'date_time'
+      - 'date_time_iso'
+      - 'time_date'
+      - 'time_utc'
+      - 'beat'
+
+#program 8 time slots for weekday, saturday and sunday/holiday
+  - platform: template
+    sensors:
+      heating_program:
+        friendly_name: "Heating Program"
+        value_template: >-  # ok 141119
+         {% set t = states('sensor.time') %}
+            {% if is_state('binary_sensor.workday_today', 'on') %}
+              {% if now().weekday() in (0,) %}
+                {%   if states('input_datetime.p1_on') <= t <= states('input_datetime.p2_on') and is_state('input_boolean.switch_monday_p1', 'on')  %} p1
+                {% elif states('input_datetime.p2_on') <= t <= states('input_datetime.p3_on') and is_state('input_boolean.switch_monday_p2', 'on')  %} p2
+                {% elif states('input_datetime.p3_on') <= t <= states('input_datetime.p4_on') and is_state('input_boolean.switch_monday_p3', 'on')  %} p3 
+                {% elif states('input_datetime.p4_on') <= t <= states('input_datetime.p5_on') and is_state('input_boolean.switch_monday_p4', 'on')  %} p4
+                {% elif states('input_datetime.p5_on') <= t <= states('input_datetime.p6_on') and is_state('input_boolean.switch_monday_p5', 'on')  %} p5
+                {% elif states('input_datetime.p6_on') <= t <= states('input_datetime.p7_on') and is_state('input_boolean.switch_monday_p6', 'on')  %} p6
+                {% elif states('input_datetime.p7_on') <= t <= states('input_datetime.p8_on') and is_state('input_boolean.switch_monday_p7', 'on')  %} p7
+                {% elif states('input_datetime.p8_on') <= t < '23:59' and is_state('input_boolean.switch_monday_p8', 'on') %} p8
+                {% else %} p0
+                {% endif %}
+              {% elif now().weekday() in (1,) %}
+                {%   if states('input_datetime.p1_on') <= t <= states('input_datetime.p2_on') and is_state('input_boolean.switch_tuesday_p1', 'on')  %} p1
+                {% elif states('input_datetime.p2_on') <= t <= states('input_datetime.p3_on') and is_state('input_boolean.switch_tuesday_p2', 'on')  %} p2
+                {% elif states('input_datetime.p3_on') <= t <= states('input_datetime.p4_on') and is_state('input_boolean.switch_tuesday_p3', 'on')  %} p3 
+                {% elif states('input_datetime.p4_on') <= t <= states('input_datetime.p5_on') and is_state('input_boolean.switch_tuesday_p4', 'on')  %} p4
+                {% elif states('input_datetime.p5_on') <= t <= states('input_datetime.p6_on') and is_state('input_boolean.switch_tuesday_p5', 'on')  %} p5
+                {% elif states('input_datetime.p6_on') <= t <= states('input_datetime.p7_on') and is_state('input_boolean.switch_tuesday_p6', 'on')  %} p6
+                {% elif states('input_datetime.p7_on') <= t <= states('input_datetime.p8_on') and is_state('input_boolean.switch_tuesday_p7', 'on')  %} p7
+                {% elif states('input_datetime.p8_on') <= t < '23:59' and is_state('input_boolean.switch_tuesday_p8', 'on') %} p8
+                {% else %} p0
+                {% endif %}
+              {% elif now().weekday() in (2,) %}
+                {%   if states('input_datetime.p1_on') <= t <= states('input_datetime.p2_on') and is_state('input_boolean.switch_wednesday_p1', 'on')  %} p1
+                {% elif states('input_datetime.p2_on') <= t <= states('input_datetime.p3_on') and is_state('input_boolean.switch_wednesday_p2', 'on')  %} p2
+                {% elif states('input_datetime.p3_on') <= t <= states('input_datetime.p4_on') and is_state('input_boolean.switch_wednesday_p3', 'on')  %} p3 
+                {% elif states('input_datetime.p4_on') <= t <= states('input_datetime.p5_on') and is_state('input_boolean.switch_wednesday_p4', 'on')  %} p4
+                {% elif states('input_datetime.p5_on') <= t <= states('input_datetime.p6_on') and is_state('input_boolean.switch_wednesday_p5', 'on')  %} p5
+                {% elif states('input_datetime.p6_on') <= t <= states('input_datetime.p7_on') and is_state('input_boolean.switch_wednesday_p6', 'on')  %} p6
+                {% elif states('input_datetime.p7_on') <= t <= states('input_datetime.p8_on') and is_state('input_boolean.switch_wednesday_p7', 'on')  %} p7
+                {% elif states('input_datetime.p8_on') <= t < '23:59' and is_state('input_boolean.switch_wednesday_p8', 'on') %} p8
+                {% else %} p0
+                {% endif %}
+              {% elif now().weekday() in (3,) %}
+                {%   if states('input_datetime.p1_on') <= t <= states('input_datetime.p2_on') and is_state('input_boolean.switch_thursday_p1', 'on')  %} p1
+                {% elif states('input_datetime.p2_on') <= t <= states('input_datetime.p3_on') and is_state('input_boolean.switch_thursday_p2', 'on')  %} p2
+                {% elif states('input_datetime.p3_on') <= t <= states('input_datetime.p4_on') and is_state('input_boolean.switch_thursday_p3', 'on')  %} p3 
+                {% elif states('input_datetime.p4_on') <= t <= states('input_datetime.p5_on') and is_state('input_boolean.switch_thursday_p4', 'on')  %} p4
+                {% elif states('input_datetime.p5_on') <= t <= states('input_datetime.p6_on') and is_state('input_boolean.switch_thursday_p5', 'on')  %} p5
+                {% elif states('input_datetime.p6_on') <= t <= states('input_datetime.p7_on') and is_state('input_boolean.switch_thursday_p6', 'on')  %} p6
+                {% elif states('input_datetime.p7_on') <= t <= states('input_datetime.p8_on') and is_state('input_boolean.switch_thursday_p7', 'on')  %} p7
+                {% elif states('input_datetime.p8_on') <= t < '23:59' and is_state('input_boolean.switch_thursday_p8', 'on') %} p8
+                {% else %} p0
+                {% endif %}
+              {% elif now().weekday() in (4,) %}
+                {%   if states('input_datetime.p1_on') <= t <= states('input_datetime.p2_on') and is_state('input_boolean.switch_friday_p1', 'on')  %} p1
+                {% elif states('input_datetime.p2_on') <= t <= states('input_datetime.p3_on') and is_state('input_boolean.switch_friday_p2', 'on')  %} p2
+                {% elif states('input_datetime.p3_on') <= t <= states('input_datetime.p4_on') and is_state('input_boolean.switch_friday_p3', 'on')  %} p3 
+                {% elif states('input_datetime.p4_on') <= t <= states('input_datetime.p5_on') and is_state('input_boolean.switch_friday_p4', 'on')  %} p4
+                {% elif states('input_datetime.p5_on') <= t <= states('input_datetime.p6_on') and is_state('input_boolean.switch_friday_p5', 'on')  %} p5
+                {% elif states('input_datetime.p6_on') <= t <= states('input_datetime.p7_on') and is_state('input_boolean.switch_friday_p6', 'on')  %} p6
+                {% elif states('input_datetime.p7_on') <= t <= states('input_datetime.p8_on') and is_state('input_boolean.switch_friday_p7', 'on')  %} p7
+                {% elif states('input_datetime.p8_on') <= t < '23:59' and is_state('input_boolean.switch_friday_p8', 'on') %} p8
+                {% else %} p0
+                {% endif %}
+              {% else %}
+                {%   if states('input_datetime.p1_on') <= t <= states('input_datetime.p2_on') and is_state('input_boolean.switch_saturday_p1', 'on')  %} p1
+                {% elif states('input_datetime.p2_on') <= t <= states('input_datetime.p3_on') and is_state('input_boolean.switch_saturday_p2', 'on')  %} p2
+                {% elif states('input_datetime.p3_on') <= t <= states('input_datetime.p4_on') and is_state('input_boolean.switch_saturday_p3', 'on')  %} p3 
+                {% elif states('input_datetime.p4_on') <= t <= states('input_datetime.p5_on') and is_state('input_boolean.switch_saturday_p4', 'on')  %} p4
+                {% elif states('input_datetime.p5_on') <= t <= states('input_datetime.p6_on') and is_state('input_boolean.switch_saturday_p5', 'on')  %} p5
+                {% elif states('input_datetime.p6_on') <= t <= states('input_datetime.p7_on') and is_state('input_boolean.switch_saturday_p6', 'on')  %} p6
+                {% elif states('input_datetime.p7_on') <= t <= states('input_datetime.p8_on') and is_state('input_boolean.switch_saturday_p7', 'on')  %} p7
+                {% elif states('input_datetime.p8_on') <= t < '23:59' and is_state('input_boolean.switch_saturday_p8', 'on') %} p8
+                {% else %} p0
+                {% endif %}
+              {% endif %}
+            {% else %}
+              {%   if states('input_datetime.p1_on') <= t <= states('input_datetime.p2_on') and is_state('input_boolean.switch_sunday_p1', 'on')  %} p1
+              {% elif states('input_datetime.p2_on') <= t <= states('input_datetime.p3_on') and is_state('input_boolean.switch_sunday_p2', 'on')  %} p2
+              {% elif states('input_datetime.p3_on') <= t <= states('input_datetime.p4_on') and is_state('input_boolean.switch_sunday_p3', 'on')  %} p3 
+              {% elif states('input_datetime.p4_on') <= t <= states('input_datetime.p5_on') and is_state('input_boolean.switch_sunday_p4', 'on')  %} p4
+              {% elif states('input_datetime.p5_on') <= t <= states('input_datetime.p6_on') and is_state('input_boolean.switch_sunday_p5', 'on')  %} p5
+              {% elif states('input_datetime.p6_on') <= t <= states('input_datetime.p7_on') and is_state('input_boolean.switch_sunday_p6', 'on')  %} p6
+              {% elif states('input_datetime.p7_on') <= t <= states('input_datetime.p8_on') and is_state('input_boolean.switch_sunday_p7', 'on')  %} p7
+              {% elif states('input_datetime.p8_on') <= t < '23:59' and is_state('input_boolean.switch_sunday_p8', 'on') %} p8
+              {% else %} p0
+              {% endif %}
+            {% endif %}         
+
+
+
+#define temperature sensors                
+  - platform: template  
+    sensors:
+      current_temp:
+        value_template: "{{ states.climate.downstairs.attributes.current_temperature }}" #read downstairs temp as a sensor
+        unit_of_measurement: '°C'
+      downstairs_target_temp:
+        value_template: "{{ states.climate.downstairs.attributes.temperature }}" #read downstairs temp as a sensor
+        unit_of_measurement: '°C'
+      upstairs_temp:
+        value_template: "{{ states.climate.upstairs.attributes.current_temperature }}" #read upstairs temp as a sensor
+        unit_of_measurement: '°C'
+      upstairs_target_temp:
+        value_template: "{{ states.climate.upstairs.attributes.temperature }}" #read upstairs set temp as a sensor
+        unit_of_measurement: '°C'
+      hvac_temperature_knob:
+        value_template: "{{ states.climate.ha_thermo.attributes.temperature }}" #read boiler stat temp as a sensor
+        unit_of_measurement: '°C'
+      ha_upstairs_temperature_knob:
+        value_template: "{{ states.climate.ha_upstairs.attributes.temperature }}" #read upstairs stat temp as a sensor
+        unit_of_measurement: '°C'
+              
+#define oil sensors                
+  - platform: template  
+    sensors:
+      oil_level:
+        unit_of_measurement: '%'
+        value_template: "{{ 120-states('sensor.distance_sensor_44_1')|float}}"
+
+
+        
+#---------------------------------Time inputs------------------------------------------------------        
+input_datetime:
+  p1_on:
+    name: P1
+    has_time: true
+    icon: mdi:clock-start   
+    
+  p2_on:
+    name: P2
+    has_time: true
+    icon: mdi:clock-end     
+    
+  p3_on:
+    name: P3
+    has_time: true
+    icon: mdi:clock-end       
+  
+  p4_on:
+    name: P4
+    has_time: true
+    icon: mdi:clock-end
+    
+  p5_on:
+    name: P5
+    has_time: true
+    icon: mdi:clock-end  
+    
+  p6_on:
+    name: P6
+    has_time: true
+    icon: mdi:clock-end  
+    
+  p7_on:
+    name: P6
+    has_time: true
+    icon: mdi:clock-end 
+    
+  p8_on:
+    name: P6
+    has_time: true
+    icon: mdi:clock-end     
+
+
+  immersion_auto_on:
+    name: Imerrsion Auto On 
+    has_time: true
+    icon: mdi:clock-end
+    
+  hw_auto_on:
+    name: HW Auto On 
+    has_time: true
+    icon: mdi:clock-end

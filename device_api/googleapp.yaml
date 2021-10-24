@@ -1,0 +1,20 @@
+google_assistant:
+  project_id: !secret project_id
+  service_account: !secret service_account
+  report_state: true
+  expose_by_default: false
+  entity_config:
+    switch.front_lights:
+      name: Front Lights
+    switch.hall_lights:
+      name: Hall Lights    
+    climate.ha_thermo:
+      name: Downstairs
+    climate.ha_upstairs:
+      name: Upstairs
+    input_boolean.switch_immersion_timer:
+      name: Immersion
+    input_boolean.switch_hw_timer:
+      name: Hot Water
+    sensor.temperature_sensor_32_0:
+      name: Water

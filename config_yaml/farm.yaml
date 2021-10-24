@@ -1,0 +1,32 @@
+#Electric fence timer
+input_number:
+  fence_timer:
+    name: Fence Timer
+    min: 1
+    max: 60
+    step: 1
+    mode: box
+    icon: mdi:timer-sand
+    
+    
+  shed_light_timer:
+    name: Shed Light Timer
+    min: 1
+    max: 60
+    step: 1
+    mode: box
+    icon: mdi:timer-sand
+
+#--------------------------------MySensors water sensors--------------------------------
+sensor:
+  - platform: template  
+    sensors:
+      water_level_moes:
+        unit_of_measurement: '%'
+        value_template: "{{ 150-states('sensor.distance_sensor_42_1')|float}}"
+  - platform: template  
+    sensors:
+      water_level_gibneys:
+        unit_of_measurement: '%'
+        value_template: "{{ 100-states('sensor.distance_sensor_48_1_2')|float}}"
+      

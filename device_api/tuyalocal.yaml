@@ -1,0 +1,46 @@
+switch:
+   - platform: localtuya
+     host: 192.168.1.211
+     local_key: !secret boiler_key
+     device_id: !secret boiler_id
+     name: boiler
+     protocol_version: 3.3
+   - platform: localtuya
+     host: 192.168.1.215
+     local_key: !secret front_room_rad1_key
+     device_id: !secret front_room_rad1_id
+     name: front_room_rad1
+     protocol_version: 3.3
+   - platform: localtuya
+     host: 192.168.1.213
+     local_key: !secret front_room_rad2_key
+     device_id: !secret front_room_rad2_id
+     name: front_room_rad2
+     protocol_version: 3.3
+   - platform: localtuya
+     host: 192.168.1.214
+     local_key: !secret hw_zone_valve_key
+     device_id: !secret hw_zone_valve_id
+     name: hw_zone_valve
+     protocol_version: 3.3
+
+     
+climate:        
+   - platform: localtuya
+     host: 192.168.1.4
+     local_key: !secret upstairs_key
+     device_id: !secret upstairs_id
+     scan_interval: 5
+     name: Upstairs
+     min_temp: 5
+     max_temp: 35
+     protocol_version: 3.3
+   - platform: localtuya
+     host: 192.168.1.12
+     local_key: !secret downstairs_key
+     device_id: !secret downstairs_id
+     scan_interval: 5
+     name: Downstairs
+     min_temp: 5
+     max_temp: 35
+     protocol_version: 3.3

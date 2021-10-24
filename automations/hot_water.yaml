@@ -1,0 +1,122 @@
+#--------------------------------Hot Water from Boiler and Immersion------------------
+#------------------------------------ Immersion Boost Timer----------------------------
+- id: 'immersion boost 1'
+  alias: Immersion Timer
+  description: Immersion Boost on for preset time
+  trigger:
+  - entity_id: input_boolean.switch_immersion_timer
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - service: climate.set_hvac_mode
+    entity_id: climate.hw_thermostat
+    data_template:
+      hvac_mode: heat
+  - service: climate.set_temperature
+    data_template:
+      entity_id: climate.hw_thermostat
+      temperature: '{{ states.input_number.immersion_temp.state }}'
+      
+- id: 'immersion boost 2'
+  alias: Immersion timed off
+  description: Immersion Boost off after preset time
+  trigger:
+  - platform: state
+    entity_id: input_boolean.switch_immersion_timer
+    to: 'off'
+  - platform: state
+    entity_id: input_boolean.switch_immersion_timer
+    to: 'on'
+    for:
+      minutes: '{{ states.input_number.immersion_timer.state | int }}'
+  action:
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.switch_immersion_timer
+  - service: climate.set_hvac_mode
+    entity_id: climate.hw_thermostat
+    data:
+      hvac_mode: 'off'
+
+#---------------------------Boiler Hot Water Boost Timer --------------------------
+- id: 'hot water boost 1'
+  alias: HW Boiler Timer
+  description: HW Boiler Boost on for preset time
+  trigger:
+  - entity_id: input_boolean.switch_hw_timer
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - service: climate.set_hvac_mode
+    entity_id: climate.hw_zone_thermostat
+    data_template:
+      hvac_mode: heat
+  - service: climate.set_temperature
+    data_template:
+      entity_id: climate.hw_zone_thermostat
+      temperature: '{{ states.input_number.immersion_temp.state }}'
+      
+- id: 'hot water boost 2'
+  alias: HW Boiler timed off after preset time
+  description: HW Boiler Boost off
+  trigger:
+  - platform: state
+    entity_id: input_boolean.switch_hw_timer
+    to: 'off'
+  - platform: state
+    entity_id: input_boolean.switch_hw_timer
+    to: 'on'
+    for:
+      minutes: '{{ states.input_number.immersion_timer.state | int }}'
+  action:
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.switch_hw_timer
+  - service: climate.set_hvac_mode
+    entity_id: climate.hw_zone_thermostat
+    data:
+      hvac_mode: 'off'
+      
+      
+#----------------Imersion automatic on time, calls boost automation at selected time----------------
+- id: 'immersion on'
+  alias: Immersion On Time
+  description: Immersion Automatic On Time
+  trigger:
+  - platform: template
+    value_template: '{{ states.sensor.time.state == states.input_datetime.immersion_auto_on.state[0:5]
+      }}'
+  condition: []
+  action:
+  - entity_id: input_boolean.switch_immersion_timer
+    service: input_boolean.turn_on
+
+#------------Boiler Hot Water automatic on time, calls boost automation at selected time-----------------
+- id: 'hot water on'
+  alias: HW On Time
+  description: HW Automatic On Time
+  trigger:
+  - platform: template
+    value_template: '{{ states.sensor.time.state == states.input_datetime.hw_auto_on.state[0:5]
+      }}'
+  condition: []
+  action:
+  - entity_id: input_boolean.switch_hw_timer
+    service: input_boolean.turn_on
+  mode: single
+
+
+#--------Work in progress, skip immersion Auto on, if forecast for clear skys, optimise solar water heating-------
+- id: 'weather based immersion'
+  alias: Smart Weather Based Immersion On
+  description: ''
+  trigger:
+  - platform: time
+    at: 00:10:00
+  condition: []
+  action:
+  - service_template: "{% if states('sensor.cloud_forecast_average') | float < 20\
+      \ %}\n  homeassistant.turn_off\n{% else %}\n  homeassistant.turn_on\n{% endif\
+      \ %}\n"
+    entity_id: automation.immersion_on_time
+  mode: single

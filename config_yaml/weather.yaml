@@ -1,0 +1,156 @@
+#---------------------weather sensors----------------------------------------------------------
+sensor:
+  - platform: template
+    sensors:
+      outside_temperature:
+        friendly_name: "Outside Temperature"
+        unit_of_measurement: '°C'
+        value_template: "{{ state_attr('weather.home', 'temperature') }}"
+        
+        
+        
+#--------------------------Read Weather Data from Open Weather Map API---------------------------------
+  - platform: rest
+    name: openweather_report
+    json_attributes:
+      - current
+      - daily
+      - hourly
+    value_template: "{{ value_json['current']['dt'] | timestamp_custom('%Y-%m-%d %H:%M', true) }}"
+    #https://api.openweathermap.org/data/2.5/onecall?lat=my_latitude=my_longitude=MY_API_KEY&units=metric&lang=en
+    resource: !secret openweather
+    scan_interval: 3600
+  - platform: template
+    sensors:
+#--------------------------------------------Today/Tonight Temp---------------------------------
+      openweather_temp_day_today:
+        value_template: "{{ state_attr('sensor.openweather_report', 'daily')[0].temp.day }}"
+        friendly_name: "Today Max Temperature"
+      openweather_temp_night_today:
+        value_template: "{{ state_attr('sensor.openweather_report', 'daily')[0].temp.night }}"
+        friendly_name: "Tonight Min Temperature"
+#--------------------------------------------Cloud cover Hourly-----------------------------------
+      openweather_cloud_cover_now:
+        friendly_name: "Current Cloud Cover"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[0].clouds }}"
+      openweather_cloud_cover_1:
+        friendly_name: "Cloud Cover in 1 Hour"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[1].clouds }}"
+      openweather_cloud_cover_2:
+        friendly_name: "Cloud Cover in 2 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[2].clouds }}"
+      openweather_cloud_cover_3:
+        friendly_name: "Cloud Cover in 3 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[3].clouds }}"
+      openweather_cloud_cover_4:
+        friendly_name: "Cloud Cover in 4 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[4].clouds }}"
+      openweather_cloud_cover_5:
+        friendly_name: "Cloud Cover in 5 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[5].clouds }}"
+      openweather_cloud_cover_6:
+        friendly_name: "Cloud Cover in 6 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[6].clouds }}"
+      openweather_cloud_cover_7:
+        friendly_name: "Cloud Cover in 7 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[7].clouds }}"
+      openweather_cloud_cover_8:
+        friendly_name: "Cloud Cover in 8 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[8].clouds }}"
+      openweather_cloud_cover_9:
+        friendly_name: "Cloud Cover in 9 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[9].clouds }}"
+      openweather_cloud_cover_10:
+        friendly_name: "Cloud Cover in 10 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[10].clouds }}"
+      openweather_cloud_cover_11:
+        friendly_name: "Cloud Cover in 11 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[11].clouds }}"
+      openweather_cloud_cover_12:
+        friendly_name: "Cloud Cover in 12 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[12].clouds }}"
+      openweather_cloud_cover_13:
+        friendly_name: "Cloud Cover in 13 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[13].clouds }}"
+      openweather_cloud_cover_14:
+        friendly_name: "Cloud Cover in 14 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[14].clouds }}"
+      openweather_cloud_cover_15:
+        friendly_name: "Cloud Cover in 15 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[15].clouds }}"
+      openweather_cloud_cover_16:
+        friendly_name: "Cloud Cover in 16 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[16].clouds }}"
+      openweather_cloud_cover_17:
+        friendly_name: "Cloud Cover in 17 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[17].clouds }}"
+      openweather_cloud_cover_18:
+        friendly_name: "Cloud Cover in 18 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[18].clouds }}"
+      openweather_cloud_cover_19:
+        friendly_name: "Cloud Cover in 19 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[19].clouds }}"
+      openweather_cloud_cover_20:
+        friendly_name: "Cloud Cover in 20 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[20].clouds }}"
+      openweather_cloud_cover_21:
+        friendly_name: "Cloud Cover in 21 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[21].clouds }}"
+      openweather_cloud_cover_22:
+        friendly_name: "Cloud Cover in 22 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[22].clouds }}"
+      openweather_cloud_cover_23:
+        friendly_name: "Cloud Cover in 23 Hours"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.openweather_report', 'hourly')[23].clouds }}"
+#----------------------------------Wind Today Tomorrow------------------------------------------
+      openweather_wind_today:
+        friendly_name: "Wind Speed Today"
+        unit_of_measurement: 'Kph'
+        value_template: "{{ state_attr('sensor.openweather_report', 'daily')[0].wind_speed }}"
+      openweather_wind_tomorrow:
+        friendly_name: "Wind Speed Tomorrow"
+        unit_of_measurement: 'Kph'
+        value_template: "{{ state_attr('sensor.openweather_report', 'daily')[1].wind_speed }}"
+        
+        
+        
+template:
+  - sensor:
+      - name: "Cloud forecast Average"
+        unit_of_measurement: "%"
+        state: >
+          
+          {% set plus9h = states('sensor.openweather_cloud_cover_9') | float %}
+          {% set plus10h = states('sensor.openweather_cloud_cover_10') | float %}
+          {% set plus11h = states('sensor.openweather_cloud_cover_11') | float %}
+          {% set plus12h = states('sensor.openweather_cloud_cover_12') | float %}
+          {% set plus13h = states('sensor.openweather_cloud_cover_13') | float %}
+          {% set plus14h = states('sensor.openweather_cloud_cover_14') | float %}
+          {% set plus15h = states('sensor.openweather_cloud_cover_15') | float %}
+          {% set plus16h = states('sensor.openweather_cloud_cover_16') | float %}
+          
+          {{ ((plus9h + plus10h + plus11h + plus12h + plus13h + plus14h + plus15h + plus16h ) / 8) | round(0, default=0) }}

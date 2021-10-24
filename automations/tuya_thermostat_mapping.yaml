@@ -1,0 +1,59 @@
+#--------------Tuya Stat Mapping, fixes visual issues and ignores unused modes--------------------
+#Downstairs Thermostat
+- alias: Downstairs Stat to virtual map
+  description: map physical controls onto virtual thermostat
+  trigger:
+  - entity_id: sensor.downstairs_target_temp
+    platform: state
+  condition: []
+  action:
+  - data: {}
+    service: climate.set_temperature
+    data_template:
+      entity_id: climate.ha_thermo
+      temperature: '{{ states.climate.downstairs.attributes.temperature }}'
+  id: 'downstairs thermo 1'
+  
+- alias: virtual stat to Downstairs map
+  description: map virtual controls onto physical thermostat
+  trigger:
+  - entity_id: sensor.hvac_temperature_knob
+    platform: state
+  condition: []
+  action:
+  - data: {}
+    service: climate.set_temperature
+    data_template:
+      entity_id: climate.downstairs
+      temperature: '{{ states.climate.ha_thermo.attributes.temperature }}'
+  id: 'downstairs virt thermo 1'
+
+
+#Upstairs Thermostat
+- alias: Upstairs Stat to virtual map
+  description: map physical controls onto virtual thermostat
+  trigger:
+  - entity_id: sensor.upstairs_target_temp
+    platform: state
+  condition: []
+  action:
+  - data: {}
+    service: climate.set_temperature
+    data_template:
+      entity_id: climate.ha_upstairs
+      temperature: '{{ states.climate.upstairs.attributes.temperature }}'
+  id: 'downstairs thermo 2'
+
+- alias: virtual stat to Upstairs map
+  description: map virtual controls onto physical thermostat
+  trigger:
+  - entity_id: sensor.ha_upstairs_temperature_knob
+    platform: state
+  condition: []
+  action:
+  - data: {}
+    service: climate.set_temperature
+    data_template:
+      entity_id: climate.upstairs
+      temperature: '{{ states.climate.ha_upstairs.attributes.temperature }}'
+  id: 'downstairs virt thermo 2'

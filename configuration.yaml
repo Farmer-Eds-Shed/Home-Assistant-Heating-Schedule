@@ -1,0 +1,58 @@
+#trusted proxies 
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.30.33.2
+    - 172.30.33.3
+    - 127.0.0.1
+    - ::1
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+recorder:
+  purge_keep_days: 30
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+#---------------configuration file locations--------------
+group: !include config_yaml/groups.yaml
+automation yaml: !include_dir_merge_list automations/
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+homeassistant:
+  customize: !include config_yaml/customize.yaml
+  latitude: !secret latitude
+  longitude: !secret longitude
+#-----------------custom packages--------------------------
+  packages:
+    weather: !include config_yaml/weather.yaml
+    farm: !include config_yaml/farm.yaml
+    heating: !include config_yaml/heating.yaml
+#-------------------Device Configs-----------------------
+    device_logons: !include device_api/device_logons.yaml
+    shelly: !include device_api/shelly.yaml
+    cctv: !include device_api/cctv.yaml
+    tuyalocal: !include device_api/tuyalocal.yaml
+    googleapp: !include device_api/googleapp.yaml
+    tv: !include device_api/tv.yaml
+
+downloader:
+  download_dir: downloads
+  
+
+ 
+
+
+

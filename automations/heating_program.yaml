@@ -1,0 +1,142 @@
+#--------------------Heating Program Automations----------------------------------------
+
+#----------------------Thermostat schedule-----------------------------------------------
+- alias: weektimer_program
+  description: read values from weekt schedule and apply to zone thermostats
+  trigger:
+  - platform: state
+    entity_id: sensor.heating_program
+  condition:
+  - condition: state
+    entity_id: input_boolean.heating_master
+    state: 'on'
+  action:
+  - service: climate.set_temperature
+    data_template:
+      entity_id: climate.ha_thermo
+      temperature: '{% if is_state(''sensor.heating_program'', ''p1'') %} {{ states.input_number.t1_temp.state }}
+        {% elif is_state(''sensor.heating_program'', ''p2'') %} {{ states.input_number.t2_temp.state }}
+        {% elif is_state(''sensor.heating_program'', ''p3'') %} {{ states.input_number.t3_temp.state }}
+        {% elif is_state(''sensor.heating_program'', ''p4'') %} {{ states.input_number.t4_temp.state }}
+        {% elif is_state(''sensor.heating_program'', ''p5'') %} {{ states.input_number.t5_temp.state }}
+        {% elif is_state(''sensor.heating_program'', ''p6'') %} {{ states.input_number.t6_temp.state }}
+        {% elif is_state(''sensor.heating_program'', ''p7'') %} {{ states.input_number.t7_temp.state }}
+        {% elif is_state(''sensor.heating_program'', ''p8'') %} {{ states.input_number.t8_temp.state }}
+        {% elif is_state(''sensor.heating_program'', ''p0'') %} {{ states.input_number.t0_temp.state }}
+        {% endif %}'
+  - service: climate.set_temperature
+    data_template:
+      entity_id: climate.sitting_room_thermostat
+      temperature: '{% if is_state(''sensor.heating_program'', ''p1'') %} {{ states.input_number.t1_sitting_room.state }}
+        {% elif is_state(''sensor.heating_program'', ''p2'') %} {{ states.input_number.t2_sitting_room.state }}
+        {% elif is_state(''sensor.heating_program'', ''p3'') %} {{ states.input_number.t3_sitting_room.state }}
+        {% elif is_state(''sensor.heating_program'', ''p4'') %} {{ states.input_number.t4_sitting_room.state }}
+        {% elif is_state(''sensor.heating_program'', ''p5'') %} {{ states.input_number.t5_sitting_room.state }}
+        {% elif is_state(''sensor.heating_program'', ''p6'') %} {{ states.input_number.t6_sitting_room.state }}
+        {% elif is_state(''sensor.heating_program'', ''p7'') %} {{ states.input_number.t7_sitting_room.state }}
+        {% elif is_state(''sensor.heating_program'', ''p8'') %} {{ states.input_number.t8_sitting_room.state }}
+        {% elif is_state(''sensor.heating_program'', ''p0'') %} {{ states.input_number.t0_temp.state }}
+        {% endif %}'
+  - service: climate.set_temperature
+    data_template:
+      entity_id: climate.upstairs
+      temperature: '{% if is_state(''sensor.heating_program'', ''p1'') %} {{ states.input_number.t1_upstairs.state }}
+        {% elif is_state(''sensor.heating_program'', ''p2'') %} {{ states.input_number.t2_upstairs.state }}
+        {% elif is_state(''sensor.heating_program'', ''p3'') %} {{ states.input_number.t3_upstairs.state }}
+        {% elif is_state(''sensor.heating_program'', ''p4'') %} {{ states.input_number.t4_upstairs.state }}
+        {% elif is_state(''sensor.heating_program'', ''p5'') %} {{ states.input_number.t5_upstairs.state }}
+        {% elif is_state(''sensor.heating_program'', ''p6'') %} {{ states.input_number.t6_upstairs.state }}
+        {% elif is_state(''sensor.heating_program'', ''p7'') %} {{ states.input_number.t7_upstairs.state }}
+        {% elif is_state(''sensor.heating_program'', ''p8'') %} {{ states.input_number.t8_upstairs.state }}
+        {% elif is_state(''sensor.heating_program'', ''p0'') %} {{ states.input_number.t0_temp.state }}
+        {% endif %}'
+  id: 'heating program 1'
+
+
+#-----------------------Turn on/off TRV valves with boiler---------------------------------------------------------
+- id: 'heating trv 1'
+  alias: valves on
+  description: TRV valves on, energise where nessacery on boiler start
+  trigger:
+  - entity_id: switch.boiler
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - service: climate.set_hvac_mode
+    entity_id: climate.sitting_room_thermostat
+    data:
+      hvac_mode: heat
+
+- id: 'heating trv2'
+  alias: valves off
+  description: TRV Valves off to save being energised unnecessarily
+  trigger:
+  - entity_id: switch.boiler
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - service: climate.set_hvac_mode
+    entity_id: climate.sitting_room_thermostat
+    data:
+      hvac_mode: 'off'
+
+
+#-----------------Switch on boiler when any Thermostat call for heat, or else turn off-----------------------------------
+- id: 'heating boiler 1'
+  alias: Boiler On
+  description: Turn On Boiler If any master thermostat calls for heat
+  trigger:
+  - entity_id: input_boolean.switch_upstairs
+    from: 'off'
+    platform: state
+    to: 'on'
+  - entity_id: input_boolean.switch_downstairs
+    from: 'off'
+    platform: state
+    to: 'on'
+  - entity_id: switch.hw_zone_valve
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.boiler
+    service: switch.turn_on
+
+- id: 'heating boiler 2'
+  alias: Boiler off
+  description: Turn Off Boiler if no master stat is calling for heat
+  trigger:
+  - entity_id: input_boolean.switch_downstairs
+    from: 'on'
+    platform: state
+    to: 'off'
+  - entity_id: input_boolean.switch_upstairs
+    from: 'on'
+    platform: state
+    to: 'off'
+  - entity_id: switch.hw_zone_valve
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.switch_upstairs
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.switch_downstairs
+      state: 'off'
+    - condition: state
+      entity_id: switch.hw_zone_valve
+      state: 'off'
+  action:
+  - data: {}
+    entity_id: switch.boiler
+    service: switch.turn_off
