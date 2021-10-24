@@ -1,5 +1,5 @@
 # Home Assistant Heating Schedule
-Home Assistant heating configuration with 7 Day Heating Schedule GUI
+Home Assistant heating configuration with 7 day heating schedule GUI
 
 ![alt text](https://live.staticflickr.com/65535/51626569205_3fc7830097_c.jpg)
 
@@ -16,7 +16,7 @@ Features: <br />
   8 time slots per day. <br />
   Min temperature / night temperature. <br />
   Multi zone heating. <br />
-  Imersion boost and auto on time. <br />
+  Immersion boost and auto on time. <br />
   CH hot water zone boost and auto on time. <br />
   Solar hot water monitoring. <br />
   Weather forecast monitoring, to skip schedueled immersion if following day will be sunny. <br />
