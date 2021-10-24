@@ -58,7 +58,7 @@
   alias: valves on
   description: TRV valves on, energise where nessacery on boiler start
   trigger:
-  - entity_id: switch.boiler
+  - entity_id: input_boolean.switch_downstairs
     from: 'off'
     platform: state
     to: 'on'
@@ -73,7 +73,7 @@
   alias: valves off
   description: TRV Valves off to save being energised unnecessarily
   trigger:
-  - entity_id: switch.boiler
+  - entity_id: input_boolean.switch_downstairs
     from: 'on'
     platform: state
     to: 'off'
