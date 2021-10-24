@@ -1,8 +1,7 @@
 # Home Assistant Heating Schedule
 Home Assistant Heating configuration with Lovelace 7 Day Heating Schedule
 
-![alt text](https://live.staticflickr.com/65535/49816589786_753593015a_b.jpg)
-
+![alt text](https://live.staticflickr.com/65535/51626569205_3fc7830097_c.jpg)
 
 This is the Heating portion of my Home Assistant configuration.<br />
 It uses Tuya thermostats and switches to control the heating and to give physical wall controls.<br />
@@ -29,5 +28,16 @@ Shelly 1 smart switch to control Immersion Heater via 32A relay.<br />
 MySensors ESP8266 Gateway.<br />
 MySensors Arduino based temperature sensors.<br />
 MySensors Arduino based oil level sensor.
+<br />
+<br />
+Any Master Zone Thermostats can call boiler for heat.
+Slave Thermostats control TRV's and switch on/off with Master thermostats, this saves TRV's remianing energized when boiler is off. <br />
+![alt text](https://live.staticflickr.com/65535/51625710401_8cbae69eb1_c.jpg)
+<br />
+Hot Water Controls, boost, auto on, and a work in progress weather automation to reduce immersion usage when clear skies are forecast. Immersion is used on night rate electricity but is disabled if enough sun is forecast. <br />
+![alt text](https://live.staticflickr.com/65535/51626356674_31149860d3_c.jpg)
+<br />
+Graphs are useful to track system performance <br />
 
 
+![alt text](https://live.staticflickr.com/65535/51626356669_54c5563b5b_c.jpg)
