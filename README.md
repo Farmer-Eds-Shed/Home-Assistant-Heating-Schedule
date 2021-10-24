@@ -12,15 +12,15 @@ Additional temperature sensors based on [MySensors.org](https://MySensors.org) a
 Other Dependencies:
 [Custom Cards](https://github.com/custom-cards/button-card)
 
-Features:
-  7 Day timer
-  8 Time Slots per day
-  Min Temperature / night temperature.
-  Multi Zone Heating
-  Imersion boost and auto on time.
-  CH Hot Water Zone boost and auto on time.
-  Solar Hot Water Monitoring.
-  Weather forecast monitoring, to skip schedueled immersion if following day will be sunny. 
+Features: <br />
+  7 Day timer. <br />
+  8 Time Slots per day. <br />
+  Min Temperature / night temperature. <br />
+  Multi Zone Heating. <br />
+  Imersion boost and auto on time. <br />
+  CH Hot Water Zone boost and auto on time. <br />
+  Solar Hot Water Monitoring. <br />
+  Weather forecast monitoring, to skip schedueled immersion if following day will be sunny. <br />
 
 Hardware: <br />
 Saswell T19XWHB-7-DF-APP(TY) thermostats (Tuya), to control heating zone valves and main physical interface for heating system.<br />
