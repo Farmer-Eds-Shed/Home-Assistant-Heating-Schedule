@@ -1,0 +1,57 @@
+views:
+  - title: Garden
+    path: garden
+    icon: mdi:flower
+    badges: []
+    cards:
+      - type: gauge
+        entity: sensor.outside_temperature
+        min: 0
+        max: 35
+        severity:
+          green: 12
+          yellow: 17
+          red: 20
+      - type: gauge
+        min: 0
+        max: 35
+        name: Polytunnel Temp
+        severity:
+          green: 12
+          yellow: 17
+          red: 20
+        entity: sensor.temperatureandhumidity_51_1
+      - type: gauge
+        entity: sensor.temperatureandhumidity_51_0
+        min: 0
+        max: 100
+        name: Polytunnel Humidity
+      - type: history-graph
+        entities:
+          - entity: sensor.temperatureandhumidity_51_1
+            name: Pollytunnel Temp
+          - entity: sensor.outside_temperature
+          - entity: sensor.temperatureandhumidity_51_0
+            name: Pollytunnel Hum
+        refresh_interval: 0
+        hours_to_show: 100
+      - type: weather-forecast
+        entity: weather.home
+      - type: entities
+        entities:
+          - entity: switch.relay_110_1
+            name: Irrigation Zone 1
+            icon: hass:water
+          - entity: switch.relay_110_2
+            name: Irrigation Zone 2
+            icon: hass:water
+          - entity: switch.relay_110_3
+            name: Irrigation Zone 3
+            icon: hass:water
+          - entity: switch.relay_110_4
+            icon: hass:water
+            name: Irrigation Zone 4
+      - type: entity
+        entity: sensor.openweather_cloud_cover_now
+        icon: mdi:cloud-outline
+title: Garden
