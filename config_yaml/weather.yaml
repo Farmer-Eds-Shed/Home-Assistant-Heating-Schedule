@@ -5,7 +5,7 @@ sensor:
       outside_temperature:
         friendly_name: "Outside Temperature"
         unit_of_measurement: '°C'
-        value_template: "{{ state_attr('weather.home', 'temperature') }}"
+        value_template: "{{ state_attr('weather.home_2', 'temperature') }}"
         
         
         
@@ -24,11 +24,13 @@ sensor:
     sensors:
 #--------------------------------------------Today/Tonight Temp---------------------------------
       openweather_temp_day_today:
-        value_template: "{{ state_attr('sensor.openweather_report', 'daily')[0].temp.day }}"
+        value_template: "{{ state_attr('sensor.openweather_report', 'daily')[0].temp.max }}"
         friendly_name: "Today Max Temperature"
+        unit_of_measurement: '°C'
       openweather_temp_night_today:
         value_template: "{{ state_attr('sensor.openweather_report', 'daily')[0].temp.night }}"
         friendly_name: "Tonight Min Temperature"
+        unit_of_measurement: '°C'
 #--------------------------------------------Cloud cover Hourly-----------------------------------
       openweather_cloud_cover_now:
         friendly_name: "Current Cloud Cover"
@@ -129,11 +131,11 @@ sensor:
 #----------------------------------Wind Today Tomorrow------------------------------------------
       openweather_wind_today:
         friendly_name: "Wind Speed Today"
-        unit_of_measurement: 'Kph'
+        unit_of_measurement: 'mps'
         value_template: "{{ state_attr('sensor.openweather_report', 'daily')[0].wind_speed }}"
       openweather_wind_tomorrow:
         friendly_name: "Wind Speed Tomorrow"
-        unit_of_measurement: 'Kph'
+        unit_of_measurement: 'mps'
         value_template: "{{ state_attr('sensor.openweather_report', 'daily')[1].wind_speed }}"
         
         
@@ -154,3 +156,18 @@ template:
           {% set plus16h = states('sensor.openweather_cloud_cover_16') | float %}
           
           {{ ((plus9h + plus10h + plus11h + plus12h + plus13h + plus14h + plus15h + plus16h ) / 8) | round(0, default=0) }}
+          
+          
+          
+#--------------------------Weather maps-----------------------------------------------
+camera:
+  - platform: generic
+    still_image_url: https://api.sat24.com/animated/GB/rainTMC/3/GMT%20Standard%20Time/441208
+    name: Rain Radar
+    
+  - platform: generic
+    still_image_url: https://api.sat24.com/animated/GB/infraPolair/3/GMT%20Standard%20Time/4239410
+    name: Infrared Radar
+    
+    
+    
