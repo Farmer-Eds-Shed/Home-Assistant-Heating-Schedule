@@ -328,7 +328,7 @@ input_number:  # input number
   cloud_forecast:  # set time for immersion heater
     name: Max Cloud Cover %
     min: 1
-    max: 100
+    max: 101
     step: 1 
     mode: box
     icon: mdi:cloud-outline
